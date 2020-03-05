@@ -4,10 +4,11 @@ using System.Collections.ObjectModel;
 using AutomaticArrangement.MVVM.Commands;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autodesk.Revit.UI;
+using AutomaticArrangement.RevitAPI.APIClasses.PluginHandlers;
 
 namespace AutomaticArrangement
 {
@@ -15,7 +16,11 @@ namespace AutomaticArrangement
     {
         public ViewModel()
         {
+            Creator handler = new Creator();
+            ExternalEvent exEvent = ExternalEvent.Create(handler);
+            this._event = exEvent;
         }
+        private ExternalEvent _event;
         private RelayCommand calcCommand;
         public RelayCommand CalcCommand
         {
@@ -24,7 +29,7 @@ namespace AutomaticArrangement
                 return calcCommand ??
                   (calcCommand = new RelayCommand(obj =>
                   {
-
+                      _event.Raise();
                   }));
             }
         }
