@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>Command AutomaticArrangement</Text>
+    <Description>Some description for AutomaticArrangement</Description>
+    <Assembly>AutomaticArrangement.dll</Assembly>
+    <FullClassName>AutomaticArrangement.Command</FullClassName>
+    <ClientId>ba2293cc-6b9f-4b52-9540-2fa93808a9dc</ClientId>
+    <VendorId>com.ali.asad</VendorId>
+    <VendorDescription>Ali Asad, https://twitter.com/imaliasad</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Application AutomaticArrangement</Name>
+    <Assembly>AutomaticArrangement.dll</Assembly>
+    <FullClassName>AutomaticArrangement.App</FullClassName>
+    <ClientId>cedd0b97-678b-4bbe-804a-61d7336bdc9a</ClientId>
+    <VendorId>com.ali.asad</VendorId>
+    <VendorDescription>Ali Asad, https://twitter.com/imaliasad</VendorDescription>
+  </AddIn>
+</RevitAddIns>
