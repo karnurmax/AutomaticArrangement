@@ -11,6 +11,6 @@ namespace AutomaticArrangement.RevitAPI.APIClasses.Interfaces
 {
     public interface IArrangementCalculator
     {
-        List<LocationPoint> Calculate(Room room, Rules rules);
+        List<XYZ> Calculate(Room room, Rules rules, FamilySymbol fs);
     }
 }

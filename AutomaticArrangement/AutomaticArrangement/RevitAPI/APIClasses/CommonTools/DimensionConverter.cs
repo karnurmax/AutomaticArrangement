@@ -10,11 +10,11 @@ namespace AutomaticArrangement.RevitAPI.APIClasses.CommonTools
     {
         public static double FeetToMeter(double d)
         {
-            return d * 0.3048;
+            return d * 3.048;
         }
         public static double MeterToFeet(double d)
         {
-            return d * 3.28084;
+            return d / 3.048;
         }
     }
 }
