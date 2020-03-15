@@ -21,6 +21,8 @@ namespace AutomaticArrangement.RevitAPI.APIClasses.PluginHandlers
     {
         public UIApplication App { get; private set; }
         public Autodesk.Revit.DB.Document Doc { get; private set; }
+        public string FamilySymbolName { get; private set; } = "ИП 212-64 прот. R3 ПАСН.425232.038";
+
         private IArrangementCalculator calculator = null;
         FamilySymbol symbol;
         public void Execute(UIApplication app)
@@ -38,10 +40,34 @@ namespace AutomaticArrangement.RevitAPI.APIClasses.PluginHandlers
                     transaction.Start("auto arrangement");
                     this.symbol = GetFamilySymbol();
                     var ids = app.ActiveUIDocument.Selection.GetElementIds().ToList();
-                    if (symbol == null || ids == null || ids.Count == 0)
+                    if (ids == null || ids.Count == 0)
                     {
-                        TaskDialog.Show("Ошибка", "Семейство не найдено или помещения не выбраны");
+                        TaskDialog.Show("Ошибка", "Помещения не выбраны");
                         return;
+                    }
+                    if (symbol == null)
+                    {
+                        var dr = TaskDialog.Show("Ошибка загрузки", "Семейство не найдено. Выберите путь...", TaskDialogCommonButtons.Ok | TaskDialogCommonButtons.Cancel, TaskDialogResult.Ok);
+                        if (dr == TaskDialogResult.Ok)
+                        {
+                            FileOpenDialog fileOpenDialog = new FileOpenDialog("revit files (*.rfa)|*.rfa|All files (*.*)|*.*");
+                            var fodr = fileOpenDialog.Show();
+                            if (fodr == ItemSelectionDialogResult.Confirmed)
+                            {
+                                var model = fileOpenDialog.GetSelectedModelPath();
+                                var path = ModelPathUtils.ConvertModelPathToUserVisiblePath(model);
+                                var loaded = Doc.LoadFamilySymbol(path, this.FamilySymbolName, out FamilySymbol loadedFS);
+                                if (!loaded)
+                                {
+                                    TaskDialog.Show("Ошибка загрузки семейства", "Не найдено семейство с названием \"ИП 212-64 прот. R3 ПАСН.425232.038\"");
+                                    return;
+                                }
+                                else
+                                {
+                                    this.symbol = loadedFS;
+                                }
+                            }
+                        }
                     }
                     if (!this.symbol.IsActive)
                         this.symbol.Activate();
