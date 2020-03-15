@@ -98,7 +98,7 @@ namespace AutomaticArrangement.RevitAPI.APIClasses.Classes
                 vInterval = 0;
                 return;
             }
-            double neededAsMinimum = minArea / (10 * (rules.MaxBetweenDevices));
+            double neededAsMinimum = minArea / rules.MaxBetweenDevices;
             vCount = (int)neededAsMinimum;
             if (vCount != neededAsMinimum)
                 vCount += 1;
@@ -117,7 +117,7 @@ namespace AutomaticArrangement.RevitAPI.APIClasses.Classes
                 hInterval = 0;
                 return;
             }
-            double neededAsMinimum = minArea / (10 * (rules.MaxBetweenDevices));
+            double neededAsMinimum = minArea / rules.MaxBetweenDevices;
             hCount = (int)neededAsMinimum;
             if (hCount != neededAsMinimum)
                 hCount += 1;
