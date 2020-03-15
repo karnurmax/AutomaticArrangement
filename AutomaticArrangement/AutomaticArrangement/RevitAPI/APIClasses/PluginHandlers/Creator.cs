@@ -121,16 +121,16 @@ namespace AutomaticArrangement.RevitAPI.APIClasses.PluginHandlers
 
         private Rules GetRulesForRoom(Room room)
         {
-            double height = DimensionConverter.FeetToMeter(room.UnboundedHeight);
+            double height = DimensionConverter.FeetToMeter(room.UnboundedHeight) / 10;
             return height < 3.5 ?
             new Rules
             {
-                MaxBetweenDevices = DimensionConverter.MeterToFeet(5.0),
-                MaxBetweenDeviceAndWall = DimensionConverter.MeterToFeet(2.5)
+                MaxBetweenDevices = DimensionConverter.MeterToFeet(5.0) * 10,
+                MaxBetweenDeviceAndWall = DimensionConverter.MeterToFeet(2.5) * 10
             } : new Rules
             {
-                MaxBetweenDevices = DimensionConverter.MeterToFeet(4.5),
-                MaxBetweenDeviceAndWall = DimensionConverter.MeterToFeet(2.0)
+                MaxBetweenDevices = DimensionConverter.MeterToFeet(4.5) * 10,
+                MaxBetweenDeviceAndWall = DimensionConverter.MeterToFeet(2.0) * 10
             };
 
         }

@@ -22,7 +22,7 @@ namespace AutomaticArrangement.RevitAPI.APIClasses.Classes
             //roomHeight /= 10;
             //roomWidth /= 10;
 
-            var fsDiameter = DimensionConverter.FeetToMeter(fs.LookupParameter("ADSK_Размер_Диаметр").AsDouble());
+            var fsDiameter = fs.LookupParameter("ADSK_Размер_Диаметр").AsDouble();
             CalculateCountAndIntervalsByVertical(roomHeight, rules, fsDiameter, out double vOffsetFromWall, out int vCount, out double vInterval);
             CalculateCountAndIntervalsByHorizontal(roomWidth, rules, fsDiameter, out double hOffsetFromWall, out int hCount, out double hInterval);
 
@@ -109,7 +109,7 @@ namespace AutomaticArrangement.RevitAPI.APIClasses.Classes
 
         private void CalculateCountAndIntervalsByHorizontal(double roomWidth, Rules rules, double elementBBoxWidth, out double hOffsetFromWall, out int hCount, out double hInterval)
         {
-            double minArea = roomWidth - rules.MaxBetweenDeviceAndWall * 2;
+            double minArea = roomWidth - (rules.MaxBetweenDeviceAndWall * 2);
             if (minArea <= 0)
             {
                 hCount = 1;
@@ -117,14 +117,14 @@ namespace AutomaticArrangement.RevitAPI.APIClasses.Classes
                 hInterval = 0;
                 return;
             }
-            double neededAsMinimum = minArea / (rules.MaxBetweenDevices);
+            double neededAsMinimum = minArea / (10 * (rules.MaxBetweenDevices));
             hCount = (int)neededAsMinimum;
             if (hCount != neededAsMinimum)
                 hCount += 1;
+            hCount++;
             hOffsetFromWall = rules.MaxBetweenDeviceAndWall;
             hInterval = minArea / (hCount - 1);
+
         }
-
-
     }
 }
